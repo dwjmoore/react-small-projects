@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Calculator from './components/Calculator';
 import Clock from './components/Clock';
 import Home from './components/Home';
 import Navigation from './components/Navigation';
@@ -10,6 +11,7 @@ export default function App() {
 			<Routes>
 				<Route path="/" element={<Navigation />}>
 					<Route index element={<Home />} />
+					<Route path='calculator' element={<Calculator />} />
 					<Route path='clock' element={<Clock />} />
 					<Route path='*' element={<NoPage />} />
 				</Route>
