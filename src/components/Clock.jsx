@@ -1,5 +1,16 @@
-export default function Clock () {
+import { useEffect, useState } from "react"
+
+export default function Clock() {
+	const [clockState, setClockState] = useState();
+
+	useEffect(() => {
+		setInterval(() => {
+			const date = new Date();
+			setClockState(date.toLocaleTimeString());
+		}, 1000)
+	}, [])
+
 	return (
-		<div>This is the clock page.</div>
+		<div>{clockState}</div>
 	)
 }
