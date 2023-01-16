@@ -11,6 +11,8 @@ export default function Clock() {
 	}, [])
 
 	return (
-		<div className="clock">{clockState}</div>
+		<section>
+			<div className="clock">{clockState}</div>
+		</section>
 	)
 }
