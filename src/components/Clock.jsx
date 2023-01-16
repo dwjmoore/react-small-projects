@@ -11,6 +11,6 @@ export default function Clock() {
 	}, [])
 
 	return (
-		<div>{clockState}</div>
+		<div className="clock">{clockState}</div>
 	)
 }
