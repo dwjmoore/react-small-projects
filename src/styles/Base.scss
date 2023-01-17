@@ -1,10 +1,10 @@
-body {
-	margin: 0px;
+html {
+	font-size: 63.5%;
+	box-sizing: border-box;
 }
 
-section {
-	display: flex;
-	height: calc(100vh - 18.82px);
-	justify-content: center;
-	align-items: center;
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
 }
