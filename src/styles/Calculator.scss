@@ -8,13 +8,16 @@
 	width: 400px;
 
 	.calculatorDisplay {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		border-radius: 5px 5px 0px 0px;
 		width: 100%;
 		font-size: 5rem;
 		height: 80px;
 		border: none;
 		background-color: #252525;
 		color: #fff;
-		text-align: right;
 		padding-right: 20px;
 		padding-left: 10px;
 	}
