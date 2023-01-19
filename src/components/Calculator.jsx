@@ -1,28 +1,36 @@
+import { useState } from "react";
+
 export default function Calculator() {
+	const [display, setDisplay] = useState(0);
+
+	const handleClick = (event) => {
+		console.log(event.target.value);
+	}
+
 	return (
 		<div className="calculator">
-			<div className="calculatorDisplay">0</div>
+			<div className="calculatorDisplay">{display}</div>
 			<div className="calculatorButtons">
-				<button className="operator">÷</button>
-				<button className="operator">x</button>
-				<button className="operator">-</button>
-				<button className="operator">+</button>
+				<button className="operator" onClick={handleClick} value={"÷"}>÷</button>
+				<button className="operator" onClick={handleClick} value={"×"}>×</button>
+				<button className="operator" onClick={handleClick} value={"-"}>-</button>
+				<button className="operator" onClick={handleClick} value={"+"}>+</button>
 
-				<button>7</button>
-				<button>8</button>
-				<button>9</button>
-				<button>4</button>
-				<button>5</button>
-				<button>6</button>
-				<button>1</button>
-				<button>2</button>
-				<button>3</button>
+				<button onClick={handleClick} value={7}>7</button>
+				<button onClick={handleClick} value={8}>8</button>
+				<button onClick={handleClick} value={9}>9</button>
+				<button onClick={handleClick} value={4}>4</button>
+				<button onClick={handleClick} value={5}>5</button>
+				<button onClick={handleClick} value={6}>6</button>
+				<button onClick={handleClick} value={1}>1</button>
+				<button onClick={handleClick} value={2}>2</button>
+				<button onClick={handleClick} value={3}>3</button>
 
-				<button>0</button>
-				<button>.</button>
-				<button className="allClear">AC</button>
+				<button onClick={handleClick} value={0}>0</button>
+				<button onClick={handleClick} value={"."}>.</button>
+				<button className="allClear" onClick={handleClick} value={"AC"}>AC</button>
 
-				<button className="equalSign">=</button>
+				<button className="equalSign" onClick={handleClick} value={"="}>=</button>
 			</div>
 		</div>
 	)
