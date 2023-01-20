@@ -9,10 +9,9 @@ export default function Calculator() {
 			setDisplay(event.target.textContent);
 		} else if (!isNaN(event.target.textContent)) {
 			setDisplay(display + event.target.textContent);
-			console.log("The display is non-zero.");
 		}
 
-		if (event.target.textContent === ".") {
+		if (event.target.textContent === "." && !display.includes(".")) {
 			setDisplay(display + event.target.textContent)
 		}
 
