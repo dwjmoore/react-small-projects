@@ -14,13 +14,13 @@ export default function Calculator() {
 		if (event.target.textContent === "." && !display.includes(".")) {
 			setDisplay(display + event.target.textContent)
 		}
-
-		if (event.target.textContent === "AC") {
-			setDisplay("0");
-		}
 		
 	}
 
+	const handleAllClear = (event) => {
+		setDisplay("0");
+	}
+	
 	return (
 		<div className="calculator">
 			<div className="calculatorDisplay">{display}</div>
@@ -42,7 +42,7 @@ export default function Calculator() {
 
 				<button onClick={handleClick}>0</button>
 				<button onClick={handleClick}>.</button>
-				<button className="allClear" onClick={handleClick}>AC</button>
+				<button className="allClear" onClick={handleAllClear}>AC</button>
 
 				<button className="equalSign" onClick={handleClick}>=</button>
 			</div>
