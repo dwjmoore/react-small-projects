@@ -1,13 +1,29 @@
+// ---Display
+// ---The number buttons
+// ---All Clear
+// Operators
+
 import { useState } from "react";
 
 export default function Calculator() {
 	const [display, setDisplay] = useState("0");
+	const [equationPartOne, setEquationPartOne] = useState(null);
+	const [addOn, setAddOn] = useState(false);
 
 	const handleNumbers = (event) => {
 		if (display === "0") {
 			setDisplay(event.target.textContent);
 		} else {
 			setDisplay(display + event.target.textContent);
+		}
+
+		if (addOn) {
+			if (equationPartOne) {
+				setDisplay(display + event.target.textContent);
+			} else {
+				setEquationPartOne(display);
+				setDisplay(event.target.textContent);
+			}
 		}
 	}
 
@@ -17,18 +33,29 @@ export default function Calculator() {
 		}
 	}
 
+	const handleAdd = () => {
+		setAddOn(true);
+	}
+
 	const handleAllClear = () => {
 		setDisplay("0");
+		setEquationPartOne(null);
+	}
+
+	const handleEqualSign = () => {
+		if (addOn) {
+				setDisplay((Number(equationPartOne) + Number(display)).toString())
+		}
 	}
 
 	return (
 		<div className="calculator">
 			<div className="calculatorDisplay">{display}</div>
 			<div className="calculatorButtons">
-				<button className="operator" onClick={handleClick}>÷</button>
-				<button className="operator" onClick={handleClick}>×</button>
-				<button className="operator" onClick={handleClick}>-</button>
-				<button className="operator" onClick={handleClick}>+</button>
+				<button className="operator" onClick={handleAdd}>+</button>
+				<button className="operator">-</button>
+				<button className="operator">×</button>
+				<button className="operator">÷</button>
 
 				<button onClick={handleNumbers}>7</button>
 				<button onClick={handleNumbers}>8</button>
@@ -44,7 +71,7 @@ export default function Calculator() {
 				<button onClick={handleDecimal}>.</button>
 				<button className="allClear" onClick={handleAllClear}>AC</button>
 
-				<button className="equalSign" onClick={handleClick}>=</button>
+				<button className="equalSign" onClick={handleEqualSign}>=</button>
 			</div>
 		</div>
 	)
