@@ -2,7 +2,7 @@
 // xxxAdding the decimal to a number on the display.
 // xxxAll Clear
 // xxxadd
-// subtract
+// xxxsubtract
 // multiply
 // divide
 
@@ -15,10 +15,12 @@ export default function Calculator() {
 	const [opMemory, setOpMemory] = useState(null);
 	const [add, setAdd] = useState("OFF");
 	const [subtract, setSubtract] = useState("OFF");
+	const [multiply, setMultiply] = useState("OFF");
 	const [equalClicked, setEqualClicked] = useState("NO");
 
 	const handleAdd = () => {
 		setSubtract("OFF");
+		setMultiply("OFF");
 		
 		if (add === "OFF") {
 			setAdd("ON");
@@ -29,7 +31,7 @@ export default function Calculator() {
 			setEqualClicked("NO");
 		}
 
-		if (add === "ON" || subtract === "ON") {
+		if (add === "ON" || subtract === "ON" || multiply === "ON") {
 			setOpMemory(null);
 		}
 
@@ -48,6 +50,7 @@ export default function Calculator() {
 
 	const handleSubtract = () => {
 		setAdd("OFF");
+		setMultiply("OFF");
 		
 		if (subtract === "OFF") {
 			setSubtract("ON");
@@ -58,7 +61,37 @@ export default function Calculator() {
 			setEqualClicked("NO");
 		}
 
-		if (add === "ON" || subtract === "ON" ) {
+		if (add === "ON" || subtract === "ON" || multiply === "ON") {
+			setOpMemory(null);
+		}
+
+		if (equalClicked === "NO" && baseMemory && opMemory) {
+			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			return;
+		}
+
+		if (equalClicked === "NO" && !baseMemory && opMemory) {
+			setDisplay((Number(display) + Number(opMemory)).toString());
+			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			return;
+		}
+	}
+
+	const handleMultiply = () => {
+		setAdd("OFF");
+		setSubtract("OFF");
+		
+		if (multiply === "OFF") {
+			setMultiply("ON");
+			setBaseMemory(display);
+		}
+
+		if (equalClicked === "YES") {
+			setEqualClicked("NO");
+		}
+
+		if (add === "ON" || subtract === "ON" || multiply === "ON") {
 			setOpMemory(null);
 		}
 
@@ -88,13 +121,13 @@ export default function Calculator() {
 			return;
 		}
 
-		if ((add === "ON" || subtract === "ON") && !opMemory) {
+		if ((add === "ON" || subtract === "ON" || multiply === "ON") && !opMemory) {
 			setDisplay(event.target.textContent);
 			setOpMemory(event.target.textContent);
 			return;
 		}
 
-		if ((add === "ON" || subtract === "ON") && opMemory) {
+		if ((add === "ON" || subtract === "ON" || multiply === "ON") && opMemory) {
 			setDisplay(display + event.target.textContent);
 			setOpMemory(opMemory + event.target.textContent);
 			return;
@@ -104,13 +137,13 @@ export default function Calculator() {
 	}
 
 	const handleDecimal = (event) => {
-		if (baseMemory && (add === "ON" || subtract === "ON") && !opMemory) {
+		if (baseMemory && (add === "ON" || subtract === "ON" || multiply === "ON") && !opMemory) {
 			setDisplay("0" + event.target.textContent);
 			setOpMemory("0" + event.target.textContent);
 			return;
 		}
 
-		if ((add === "ON" || subtract === "ON") && opMemory && !display.includes(".")) {
+		if ((add === "ON" || subtract === "ON" || multiply === "ON") && opMemory && !display.includes(".")) {
 			setDisplay(display + event.target.textContent);
 			setOpMemory(opMemory + event.target.textContent);
 			return;
@@ -128,6 +161,7 @@ export default function Calculator() {
 		setOpMemory(null);
 		setAdd("OFF");
 		setSubtract("OFF");
+		setMultiply("OFF");
 		setEqualClicked("NO");
 	}
 
@@ -146,6 +180,13 @@ export default function Calculator() {
 			return;
 		}
 
+		if (multiply === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
+			setDisplay((Number(display) * Number(opMemory)).toString());
+			setBaseMemory((Number(display) * Number(opMemory)).toString());
+			setEqualClicked("YES");
+			return;
+		}
+
 		if (add === "ON" && opMemory) {
 			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
 			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
@@ -160,13 +201,19 @@ export default function Calculator() {
 			return;
 		}
 
-		
+		if (multiply === "ON" && opMemory) {
+			setDisplay((Number(baseMemory) * Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) * Number(opMemory)).toString());
+			setEqualClicked("YES");
+			return;
+		}
 	}
 
 	return (
 		<div>
 			<h2>Add: {add}</h2>
 			<h2>Subtract: {subtract}</h2>
+			<h2>Multiply: {multiply}</h2>
 			<h2>Base Memory: {baseMemory}</h2>
 			<h2>Op Memory: {opMemory}</h2>
 			<h2>Equal Clicked: {equalClicked}</h2>
@@ -175,7 +222,7 @@ export default function Calculator() {
 				<div className="calculatorButtons">
 					<button className="operator" onClick={handleAdd}>+</button>
 					<button className="operator" onClick={handleSubtract}>-</button>
-					<button className="operator">×</button>
+					<button className="operator" onClick={handleMultiply}>×</button>
 					<button className="operator">÷</button>
 
 					<button onClick={handleNumbers}>7</button>
