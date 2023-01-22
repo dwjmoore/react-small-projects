@@ -14,6 +14,7 @@ export default function Calculator() {
 	const [baseMemory, setBaseMemory] = useState(null);
 	const [addMemory, setAddMemory] = useState(null);
 	const [add, setAdd] = useState("OFF");
+	const [equalClicked, setEqualClicked] = useState("NO");
 
 	const handleAdd = () => {
 		if (add === "OFF") {
@@ -21,12 +22,35 @@ export default function Calculator() {
 			setBaseMemory(display);
 		}
 
+		if (equalClicked === "YES") {
+			setEqualClicked("NO");
+		}
+
 		if (add === "ON") {
 			setAddMemory(null);
+		}
+
+		if (equalClicked === "NO" && baseMemory && addMemory) {
+			setDisplay((Number(baseMemory) + Number(addMemory)).toString());
+			setBaseMemory((Number(baseMemory) + Number(addMemory)).toString());
+			return;
+		}
+
+		if (equalClicked === "NO" && !baseMemory && addMemory) {
+			setDisplay((Number(display) + Number(addMemory)).toString());
+			setBaseMemory((Number(display) + Number(addMemory)).toString());
+			return;
 		}
 	}
 
 	const handleNumbers = (event) => {
+		if (equalClicked === "YES") {
+			setDisplay(event.target.textContent);
+			setBaseMemory(null);
+			setEqualClicked("NO");
+			return;
+		}
+
 		if (display === "0") {
 			setDisplay(event.target.textContent);
 			return;
@@ -53,6 +77,12 @@ export default function Calculator() {
 			return;
 		}
 
+		if (add === "ON" && addMemory && !display.includes(".")) {
+			setDisplay(display + event.target.textContent);
+			setAddMemory(addMemory + event.target.textContent);
+			return;
+		}
+
 		if (!display.includes(".")) {
 			setDisplay(display + event.target.textContent);
 			return;
@@ -64,13 +94,26 @@ export default function Calculator() {
 		setBaseMemory(null);
 		setAddMemory(null);
 		setAdd("OFF");
+		setEqualClicked("NO");
 	}
 
 	const handleEqualSign = () => {
+		if (add === "ON" && !baseMemory && addMemory && equalClicked === "NO") {
+			setDisplay((Number(display) + Number(addMemory)).toString());
+			setBaseMemory((Number(display) + Number(addMemory)).toString());
+			setEqualClicked("YES");
+			return;
+		}
+
+
 		if (add === "ON" && addMemory) {
 			setDisplay((Number(baseMemory) + Number(addMemory)).toString());
 			setBaseMemory((Number(baseMemory) + Number(addMemory)).toString());
+			setEqualClicked("YES");
+			return;
 		}
+
+		
 	}
 
 	return (
@@ -78,6 +121,7 @@ export default function Calculator() {
 			<h2>Add: {add}</h2>
 			<h2>Base Memory: {baseMemory}</h2>
 			<h2>Add Memory: {addMemory}</h2>
+			<h2>Equal Clicked: {equalClicked}</h2>
 			<div className="calculator">
 				<div className="calculatorDisplay">{display}</div>
 				<div className="calculatorButtons">
