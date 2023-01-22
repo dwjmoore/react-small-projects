@@ -1,7 +1,7 @@
 // xxxHitting numbers to show up on display.
 // xxxAdding the decimal to a number on the display.
 // xxxAll Clear
-// add
+// xxxadd
 // subtract
 // multiply
 // divide
@@ -12,11 +12,14 @@ import { useState } from "react";
 export default function Calculator() {
 	const [display, setDisplay] = useState("0");
 	const [baseMemory, setBaseMemory] = useState(null);
-	const [addMemory, setAddMemory] = useState(null);
+	const [opMemory, setOpMemory] = useState(null);
 	const [add, setAdd] = useState("OFF");
+	const [subtract, setSubtract] = useState("OFF");
 	const [equalClicked, setEqualClicked] = useState("NO");
 
 	const handleAdd = () => {
+		setSubtract("OFF");
+		
 		if (add === "OFF") {
 			setAdd("ON");
 			setBaseMemory(display);
@@ -26,19 +29,48 @@ export default function Calculator() {
 			setEqualClicked("NO");
 		}
 
-		if (add === "ON") {
-			setAddMemory(null);
+		if (add === "ON" || subtract === "ON") {
+			setOpMemory(null);
 		}
 
-		if (equalClicked === "NO" && baseMemory && addMemory) {
-			setDisplay((Number(baseMemory) + Number(addMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(addMemory)).toString());
+		if (equalClicked === "NO" && baseMemory && opMemory) {
+			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
 			return;
 		}
 
-		if (equalClicked === "NO" && !baseMemory && addMemory) {
-			setDisplay((Number(display) + Number(addMemory)).toString());
-			setBaseMemory((Number(display) + Number(addMemory)).toString());
+		if (equalClicked === "NO" && !baseMemory && opMemory) {
+			setDisplay((Number(display) + Number(opMemory)).toString());
+			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			return;
+		}
+	}
+
+	const handleSubtract = () => {
+		setAdd("OFF");
+		
+		if (subtract === "OFF") {
+			setSubtract("ON");
+			setBaseMemory(display);
+		}
+
+		if (equalClicked === "YES") {
+			setEqualClicked("NO");
+		}
+
+		if (add === "ON" || subtract === "ON" ) {
+			setOpMemory(null);
+		}
+
+		if (equalClicked === "NO" && baseMemory && opMemory) {
+			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			return;
+		}
+
+		if (equalClicked === "NO" && !baseMemory && opMemory) {
+			setDisplay((Number(display) + Number(opMemory)).toString());
+			setBaseMemory((Number(display) + Number(opMemory)).toString());
 			return;
 		}
 	}
@@ -56,30 +88,31 @@ export default function Calculator() {
 			return;
 		}
 
-		if (add === "ON" && !addMemory) {
+		if ((add === "ON" || subtract === "ON") && !opMemory) {
 			setDisplay(event.target.textContent);
-			setAddMemory(event.target.textContent);
+			setOpMemory(event.target.textContent);
 			return;
 		}
 
-		if (add === "ON" && addMemory) {
+		if ((add === "ON" || subtract === "ON") && opMemory) {
 			setDisplay(display + event.target.textContent);
-			setAddMemory(addMemory + event.target.textContent);
+			setOpMemory(opMemory + event.target.textContent);
+			return;
 		}
 
 		setDisplay(display + event.target.textContent);
 	}
 
 	const handleDecimal = (event) => {
-		if (baseMemory && add === "ON" && !addMemory) {
+		if (baseMemory && (add === "ON" || subtract === "ON") && !opMemory) {
 			setDisplay("0" + event.target.textContent);
-			setAddMemory("0" + event.target.textContent);
+			setOpMemory("0" + event.target.textContent);
 			return;
 		}
 
-		if (add === "ON" && addMemory && !display.includes(".")) {
+		if ((add === "ON" || subtract === "ON") && opMemory && !display.includes(".")) {
 			setDisplay(display + event.target.textContent);
-			setAddMemory(addMemory + event.target.textContent);
+			setOpMemory(opMemory + event.target.textContent);
 			return;
 		}
 
@@ -92,23 +125,37 @@ export default function Calculator() {
 	const handleAllClear = () => {
 		setDisplay("0");
 		setBaseMemory(null);
-		setAddMemory(null);
+		setOpMemory(null);
 		setAdd("OFF");
+		setSubtract("OFF");
 		setEqualClicked("NO");
 	}
 
 	const handleEqualSign = () => {
-		if (add === "ON" && !baseMemory && addMemory && equalClicked === "NO") {
-			setDisplay((Number(display) + Number(addMemory)).toString());
-			setBaseMemory((Number(display) + Number(addMemory)).toString());
+		if (add === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
+			setDisplay((Number(display) + Number(opMemory)).toString());
+			setBaseMemory((Number(display) + Number(opMemory)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
+		if (subtract === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
+			setDisplay((Number(display) - Number(opMemory)).toString());
+			setBaseMemory((Number(display) - Number(opMemory)).toString());
+			setEqualClicked("YES");
+			return;
+		}
 
-		if (add === "ON" && addMemory) {
-			setDisplay((Number(baseMemory) + Number(addMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(addMemory)).toString());
+		if (add === "ON" && opMemory) {
+			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setEqualClicked("YES");
+			return;
+		}
+
+		if (subtract === "ON" && opMemory) {
+			setDisplay((Number(baseMemory) - Number(opMemory)).toString());
+			setBaseMemory((Number(baseMemory) - Number(opMemory)).toString());
 			setEqualClicked("YES");
 			return;
 		}
@@ -119,14 +166,15 @@ export default function Calculator() {
 	return (
 		<div>
 			<h2>Add: {add}</h2>
+			<h2>Subtract: {subtract}</h2>
 			<h2>Base Memory: {baseMemory}</h2>
-			<h2>Add Memory: {addMemory}</h2>
+			<h2>Op Memory: {opMemory}</h2>
 			<h2>Equal Clicked: {equalClicked}</h2>
 			<div className="calculator">
 				<div className="calculatorDisplay">{display}</div>
 				<div className="calculatorButtons">
 					<button className="operator" onClick={handleAdd}>+</button>
-					<button className="operator">-</button>
+					<button className="operator" onClick={handleSubtract}>-</button>
 					<button className="operator">×</button>
 					<button className="operator">÷</button>
 
