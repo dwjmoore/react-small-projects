@@ -1,11 +1,4 @@
-// xxxHitting numbers to show up on display.
-// xxxAdding the decimal to a number on the display.
-// xxxAll Clear
-// xxxadd
-// xxxsubtract
-// xxxmultiply
-// divide
-
+// still need to deal with number length and rounding errors
 
 import { useState } from "react";
 
@@ -23,7 +16,7 @@ export default function Calculator() {
 		setSubtract("OFF");
 		setMultiply("OFF");
 		setDivide("OFF");
-		
+
 		if (add === "OFF") {
 			setAdd("ON");
 			setBaseMemory(display);
@@ -38,14 +31,14 @@ export default function Calculator() {
 		}
 
 		if (equalClicked === "NO" && baseMemory && opMemory) {
-			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 
 		if (equalClicked === "NO" && !baseMemory && opMemory) {
-			setDisplay((Number(display) + Number(opMemory)).toString());
-			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 	}
@@ -54,7 +47,7 @@ export default function Calculator() {
 		setAdd("OFF");
 		setMultiply("OFF");
 		setDivide("OFF");
-		
+
 		if (subtract === "OFF") {
 			setSubtract("ON");
 			setBaseMemory(display);
@@ -69,14 +62,14 @@ export default function Calculator() {
 		}
 
 		if (equalClicked === "NO" && baseMemory && opMemory) {
-			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 
 		if (equalClicked === "NO" && !baseMemory && opMemory) {
-			setDisplay((Number(display) + Number(opMemory)).toString());
-			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 	}
@@ -85,7 +78,7 @@ export default function Calculator() {
 		setAdd("OFF");
 		setSubtract("OFF");
 		setDivide("OFF");
-		
+
 		if (multiply === "OFF") {
 			setMultiply("ON");
 			setBaseMemory(display);
@@ -100,14 +93,14 @@ export default function Calculator() {
 		}
 
 		if (equalClicked === "NO" && baseMemory && opMemory) {
-			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 
 		if (equalClicked === "NO" && !baseMemory && opMemory) {
-			setDisplay((Number(display) + Number(opMemory)).toString());
-			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 	}
@@ -116,7 +109,7 @@ export default function Calculator() {
 		setAdd("OFF");
 		setSubtract("OFF");
 		setMultiply("OFF");
-		
+
 		if (divide === "OFF") {
 			setDivide("ON");
 			setBaseMemory(display);
@@ -131,14 +124,14 @@ export default function Calculator() {
 		}
 
 		if (equalClicked === "NO" && baseMemory && opMemory) {
-			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 
 		if (equalClicked === "NO" && !baseMemory && opMemory) {
-			setDisplay((Number(display) + Number(opMemory)).toString());
-			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
 			return;
 		}
 	}
@@ -203,95 +196,86 @@ export default function Calculator() {
 
 	const handleEqualSign = () => {
 		if (add === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
-			setDisplay((Number(display) + Number(opMemory)).toString());
-			setBaseMemory((Number(display) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) + Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (subtract === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
-			setDisplay((Number(display) - Number(opMemory)).toString());
-			setBaseMemory((Number(display) - Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) - Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) - Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (multiply === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
-			setDisplay((Number(display) * Number(opMemory)).toString());
-			setBaseMemory((Number(display) * Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) * Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) * Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (divide === "ON" && !baseMemory && opMemory && equalClicked === "NO") {
-			setDisplay((Number(display) / Number(opMemory)).toString());
-			setBaseMemory((Number(display) / Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(display) / Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(display) / Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (add === "ON" && opMemory) {
-			setDisplay((Number(baseMemory) + Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) + Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) + Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (subtract === "ON" && opMemory) {
-			setDisplay((Number(baseMemory) - Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) - Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) - Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) - Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (multiply === "ON" && opMemory) {
-			setDisplay((Number(baseMemory) * Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) * Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) * Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) * Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 
 		if (divide === "ON" && opMemory) {
-			setDisplay((Number(baseMemory) / Number(opMemory)).toString());
-			setBaseMemory((Number(baseMemory) / Number(opMemory)).toString());
+			setDisplay(parseFloat((Number(baseMemory) / Number(opMemory)).toFixed(7)).toString());
+			setBaseMemory(parseFloat((Number(baseMemory) / Number(opMemory)).toFixed(7)).toString());
 			setEqualClicked("YES");
 			return;
 		}
 	}
 
 	return (
-		<div>
-			<h2>Add: {add}</h2>
-			<h2>Subtract: {subtract}</h2>
-			<h2>Multiply: {multiply}</h2>
-			<h2>Divide: {divide}</h2>
-			<h2>Base Memory: {baseMemory}</h2>
-			<h2>Op Memory: {opMemory}</h2>
-			<h2>Equal Clicked: {equalClicked}</h2>
-			<div className="calculator">
-				<div className="calculatorDisplay">{display}</div>
-				<div className="calculatorButtons">
-					<button className="operator" onClick={handleAdd}>+</button>
-					<button className="operator" onClick={handleSubtract}>-</button>
-					<button className="operator" onClick={handleMultiply}>×</button>
-					<button className="operator" onClick={handleDivide}>÷</button>
+		<div className="calculator">
+			<div className="calculatorDisplay">{display}</div>
+			<div className="calculatorButtons">
+				<button className="operator" onClick={handleAdd}>+</button>
+				<button className="operator" onClick={handleSubtract}>-</button>
+				<button className="operator" onClick={handleMultiply}>×</button>
+				<button className="operator" onClick={handleDivide}>÷</button>
 
-					<button onClick={handleNumbers}>7</button>
-					<button onClick={handleNumbers}>8</button>
-					<button onClick={handleNumbers}>9</button>
-					<button onClick={handleNumbers}>4</button>
-					<button onClick={handleNumbers}>5</button>
-					<button onClick={handleNumbers}>6</button>
-					<button onClick={handleNumbers}>1</button>
-					<button onClick={handleNumbers}>2</button>
-					<button onClick={handleNumbers}>3</button>
-					<button onClick={handleNumbers}>0</button>
+				<button onClick={handleNumbers}>7</button>
+				<button onClick={handleNumbers}>8</button>
+				<button onClick={handleNumbers}>9</button>
+				<button onClick={handleNumbers}>4</button>
+				<button onClick={handleNumbers}>5</button>
+				<button onClick={handleNumbers}>6</button>
+				<button onClick={handleNumbers}>1</button>
+				<button onClick={handleNumbers}>2</button>
+				<button onClick={handleNumbers}>3</button>
+				<button onClick={handleNumbers}>0</button>
 
-					<button onClick={handleDecimal}>.</button>
-					<button className="allClear" onClick={handleAllClear}>AC</button>
+				<button onClick={handleDecimal}>.</button>
+				<button className="allClear" onClick={handleAllClear}>AC</button>
 
-					<button className="equalSign" onClick={handleEqualSign}>=</button>
-				</div>
+				<button className="equalSign" onClick={handleEqualSign}>=</button>
 			</div>
 		</div>
 	)
